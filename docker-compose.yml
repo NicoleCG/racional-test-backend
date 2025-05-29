@@ -5,7 +5,6 @@ services:
     user: node
     working_dir: /home/node/nest
     environment:
-      - PUERTO_NESTJS=${NEST_PORT}
       - NEST_PORT=${NEST_PORT}
       - DB_PORT=${DB_PORT}
       - DB_PASSWORD=${DB_PASSWORD}
@@ -17,21 +16,34 @@ services:
       - 3000:${NEST_PORT}
     volumes:
       - .:/home/node/nest
-    # depends_on:
-    #   - mysql
+    depends_on:
+      - mysql
 
-  # mysql:
-  #   image: "mysql:${DB_VERSION}"
-  #   environment:
-  #     - PUERTO_NESTJS=${NEST_PORT}
-  #     - NEST_PORT=${NEST_PORT}
-  #     - DB_PORT=${DB_PORT}
-  #     - DB_PASSWORD=${DB_PASSWORD}
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_USERNAME=${DB_USERNAME}
-  #     - DB_HOST=${DB_HOST}
-  #     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-  #   volumes:
-  #     - ./sql:/var/lib/mysql
-  #   ports:
-  #     - "${DB_PORT}:3306"
+  mysql:
+    image: "mysql:${DB_VERSION}"
+    environment:
+      # - NEST_PORT=${NEST_PORT}
+      # - DB_PORT=${DB_PORT}
+      # - DB_PASSWORD=${DB_PASSWORD}
+      # - DB_NAME=${DB_NAME}
+      # - DB_USERNAME=${DB_USERNAME}
+      # - DB_HOST=${DB_HOST}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - ./sql:/var/lib/mysql
+      - ./db/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${DB_PORT}:3306"
+
+  flyway:
+      image: flyway/flyway:${FLYWAY_VERSION}
+      volumes:
+        - ./db/migrations:/flyway/sql
+      environment:
+        FLYWAY_URL: jdbc:mysql://${DB_PATH}:3306/${DB_NAME}?allowPublicKeyRetrieval=true
+        FLYWAY_USER: ${DB_USERNAME}
+        FLYWAY_PASSWORD: ${DB_PASSWORD}
+      entrypoint: ["flyway", "-connectRetries=60", "migrate"]
+      depends_on: 
+        - mysql

@@ -1,3 +1,12 @@
+Enum transaction_type {
+  deposit
+  withdrawal
+}
+
+Enum stock_type {
+  buy
+  sell
+}
 
 Table User {
   id uuid [primary key, not null]
@@ -5,14 +14,14 @@ Table User {
   name varchar(50) [not null]
   username varchar(50) [not null, unique]
   email varchar(50) [not null, unique]
-  password varchar(255) [not null, unique]
+  passwordHash varchar(255) [not null]
   enabled bool [default: True]
 }
 
 Table Transaction {
   id uuid [primary key, not null]
   amount float [not null]
-  type varchar(50) [not null]
+  type transaction_type [not null]
   date date [not null]
   userId uuid [not null]
 }
@@ -26,7 +35,7 @@ Table Stock {
 Table Order {
   id uuid [primary key, not null]
   amount float [not null] 
-  type varchar(50) [not null]
+  type stock_type [not null]
   date date [not null]
   price float [not null] 
   stockId uuid [not null]
