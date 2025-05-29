@@ -1,0 +1,11 @@
+---
+config:
+  theme: redux-dark-color
+---
+erDiagram
+      USER ||--o{ TRANSACTION: realiza
+      USER ||--o{ ORDER: realiza
+      USER ||--|| PORTFOLIO: tiene
+      ORDER }o--|| STOCK: se_refiere_a
+      STOCK ||--o{ PORTFOLIOSTOCK: aparece_en
+      PORTFOLIO ||--|{ PORTFOLIOSTOCK: contiene

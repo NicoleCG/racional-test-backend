@@ -1,0 +1,37 @@
+services:
+  api:
+    image: "node:${NODE_VERSION}"
+    command: "yarn start:dev"
+    user: node
+    working_dir: /home/node/nest
+    environment:
+      - PUERTO_NESTJS=${NEST_PORT}
+      - NEST_PORT=${NEST_PORT}
+      - DB_PORT=${DB_PORT}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_HOST=${DB_HOST}
+
+    ports:
+      - 3000:${NEST_PORT}
+    volumes:
+      - .:/home/node/nest
+    # depends_on:
+    #   - mysql
+
+  # mysql:
+  #   image: "mysql:${DB_VERSION}"
+  #   environment:
+  #     - PUERTO_NESTJS=${NEST_PORT}
+  #     - NEST_PORT=${NEST_PORT}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_PASSWORD=${DB_PASSWORD}
+  #     - DB_NAME=${DB_NAME}
+  #     - DB_USERNAME=${DB_USERNAME}
+  #     - DB_HOST=${DB_HOST}
+  #     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+  #   volumes:
+  #     - ./sql:/var/lib/mysql
+  #   ports:
+  #     - "${DB_PORT}:3306"
