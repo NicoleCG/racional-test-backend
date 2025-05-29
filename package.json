@@ -1,8 +1,12 @@
 {
   "name": "racional-test-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Documentación de API REST para inversión en acciones. Prueba de ingreso técnica para Racional. Mayo, 2025",
+  "author": {
+    "name": "Nicole Carvajal Gutiérrez",
+    "email": "nicole.carvajalg@gmail.com",
+    "url": "https://github.com/NicoleCG"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
