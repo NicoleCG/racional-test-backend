@@ -22,24 +22,18 @@ services:
   mysql:
     image: "mysql:${DB_VERSION}"
     environment:
-      # - NEST_PORT=${NEST_PORT}
-      # - DB_PORT=${DB_PORT}
-      # - DB_PASSWORD=${DB_PASSWORD}
-      # - DB_NAME=${DB_NAME}
-      # - DB_USERNAME=${DB_USERNAME}
-      # - DB_HOST=${DB_HOST}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
     volumes:
       - ./sql:/var/lib/mysql
-      - ./db/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/db/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "${DB_PORT}:3306"
 
   flyway:
       image: flyway/flyway:${FLYWAY_VERSION}
       volumes:
-        - ./db/migrations:/flyway/sql
+        - ./src/db/migrations:/flyway/sql
       environment:
         FLYWAY_URL: jdbc:mysql://${DB_PATH}:3306/${DB_NAME}?allowPublicKeyRetrieval=true
         FLYWAY_USER: ${DB_USERNAME}

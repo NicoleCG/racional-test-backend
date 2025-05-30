@@ -23,28 +23,28 @@ FROM User;
 
 -- Transacciones aleatorias para los usuarios
 INSERT INTO Transaction (id, amount, type, date, userId) VALUES
-(UUID(), 1000, 'deposit', '2024-01-15', (SELECT id FROM User LIMIT 1 OFFSET 0)),
-(UUID(), 200, 'withdrawal', '2024-02-10', (SELECT id FROM User LIMIT 1 OFFSET 1)),
-(UUID(), 500, 'deposit', '2024-03-05', (SELECT id FROM User LIMIT 1 OFFSET 2)),
-(UUID(), 1200, 'deposit', '2024-03-12', (SELECT id FROM User LIMIT 1 OFFSET 3)),
-(UUID(), 300, 'withdrawal', '2024-03-20', (SELECT id FROM User LIMIT 1 OFFSET 4)),
-(UUID(), 150, 'deposit', '2024-04-01', (SELECT id FROM User LIMIT 1 OFFSET 0)),
-(UUID(), 450, 'withdrawal', '2024-04-12', (SELECT id FROM User LIMIT 1 OFFSET 1)),
-(UUID(), 980, 'deposit', '2024-04-22', (SELECT id FROM User LIMIT 1 OFFSET 2)),
-(UUID(), 600, 'deposit', '2024-05-01', (SELECT id FROM User LIMIT 1 OFFSET 3)),
-(UUID(), 300, 'withdrawal', '2024-05-10', (SELECT id FROM User LIMIT 1 OFFSET 4)),
-(UUID(), 700, 'deposit', '2024-05-15', (SELECT id FROM User LIMIT 1 OFFSET 0)),
-(UUID(), 200, 'withdrawal', '2024-05-20', (SELECT id FROM User LIMIT 1 OFFSET 1)),
-(UUID(), 1100, 'deposit', '2024-05-21', (SELECT id FROM User LIMIT 1 OFFSET 2)),
-(UUID(), 250, 'withdrawal', '2024-05-22', (SELECT id FROM User LIMIT 1 OFFSET 3)),
-(UUID(), 800, 'deposit', '2024-05-25', (SELECT id FROM User LIMIT 1 OFFSET 4));
+(UUID(), 1000, 'deposit', '2024-01-15 15:00:00', (SELECT id FROM User LIMIT 1 OFFSET 0)),
+(UUID(), 200, 'withdrawal', '2024-02-10 16:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
+(UUID(), 500, 'deposit', '2024-03-05 17:30:00', (SELECT id FROM User LIMIT 1 OFFSET 2)),
+(UUID(), 1200, 'deposit', '2024-03-12 18:00:00', (SELECT id FROM User LIMIT 1 OFFSET 3)),
+(UUID(), 300, 'withdrawal', '2024-03-20 19:00:00', (SELECT id FROM User LIMIT 1 OFFSET 4)),
+(UUID(), 150, 'deposit', '2024-04-01 10:30:00', (SELECT id FROM User LIMIT 1 OFFSET 0)),
+(UUID(), 450, 'withdrawal', '2024-04-12 11:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
+(UUID(), 980, 'deposit', '2024-04-22 12:30:00', (SELECT id FROM User LIMIT 1 OFFSET 2)),
+(UUID(), 600, 'deposit', '2024-05-01 13:30:00', (SELECT id FROM User LIMIT 1 OFFSET 3)),
+(UUID(), 300, 'withdrawal', '2024-05-10 14:00:00', (SELECT id FROM User LIMIT 1 OFFSET 4)),
+(UUID(), 700, 'deposit', '2024-05-15 15:30:00', (SELECT id FROM User LIMIT 1 OFFSET 0)),
+(UUID(), 200, 'withdrawal', '2024-05-20 16:00:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
+(UUID(), 1100, 'deposit', '2024-05-21 17:00:00', (SELECT id FROM User LIMIT 1 OFFSET 2)),
+(UUID(), 250, 'withdrawal', '2024-05-22 18:00:00', (SELECT id FROM User LIMIT 1 OFFSET 3)),
+(UUID(), 800, 'deposit', '2024-05-25 19:30:00', (SELECT id FROM User LIMIT 1 OFFSET 4));
 
 -- Órdenes con precios variados
 INSERT INTO `Order` (id, amount, type, date, price, stockId, userId)
 SELECT UUID(), 
        ROUND(1 + RAND() * 20, 2), 
        IF(RAND() > 0.5, 'buy', 'sell'), 
-       DATE_ADD('2024-01-01', INTERVAL FLOOR(RAND() * 150) DAY),
+       DATE_ADD('2024-01-01 14:30:00', INTERVAL FLOOR(RAND() * 150) DAY),
        ROUND(100 + RAND() * 900, 2),
        s.id,
        u.id

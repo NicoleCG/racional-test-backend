@@ -16,7 +16,7 @@ CREATE TABLE Transaction (
     id CHAR(36) PRIMARY KEY NOT NULL,
     amount FLOAT NOT NULL,
     type ENUM('deposit', 'withdrawal') NOT NULL,
-    date DATE NOT NULL,
+    date DATETIME NOT NULL,
     userId CHAR(36) NOT NULL,
     FOREIGN KEY (userId) REFERENCES User(id)
 );
@@ -33,7 +33,7 @@ CREATE TABLE `Order` (
     id CHAR(36) PRIMARY KEY NOT NULL,
     amount FLOAT NOT NULL,
     type ENUM('buy', 'sell') NOT NULL,
-    date DATE NOT NULL,
+    date DATETIME NOT NULL,
     price FLOAT NOT NULL,
     stockId CHAR(36) NOT NULL,
     userId CHAR(36) NOT NULL,
