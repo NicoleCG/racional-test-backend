@@ -47,6 +47,7 @@ CREATE TABLE Portfolio (
     userId CHAR(36) NOT NULL UNIQUE,
     riskLevel INT NOT NULL CHECK (riskLevel BETWEEN 1 AND 10),
     name VARCHAR(50) NOT NULL,
+    balance INT NOT NULL DEFAULT 0,
     FOREIGN KEY (userId) REFERENCES User(id)
 );
 

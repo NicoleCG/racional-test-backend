@@ -17,8 +17,8 @@ INSERT INTO Stock (id, name, ticker) VALUES
 (UUID(), 'Nvidia Corp.', 'NVDA');
 
 -- Portafolios (uno por usuario)
-INSERT INTO Portfolio (id, userId, riskLevel, name)
-SELECT UUID(), id, FLOOR(1 + RAND() * 10), CONCAT(name, "'s Portfolio")
+INSERT INTO Portfolio (id, userId, riskLevel, name, balance)
+SELECT UUID(), id, FLOOR(1 + RAND() * 10), CONCAT(name, "'s Portfolio"), FLOOR(1000 + RAND() * 10000)
 FROM User;
 
 -- Transacciones aleatorias para los usuarios
