@@ -17,19 +17,22 @@ INSERT INTO Stock (id, name, ticker) VALUES
 (UUID(), 'Nvidia Corp.', 'NVDA');
 
 -- Portafolios (uno por usuario)
-INSERT INTO Portfolio (id, userId, riskLevel, name, balance)
-SELECT UUID(), id, FLOOR(1 + RAND() * 10), CONCAT(name, "'s Portfolio"), FLOOR(1000 + RAND() * 10000)
-FROM User;
+INSERT INTO Portfolio (id, userId, riskLevel, name, balance) VALUES
+(UUID(), (SELECT id FROM User LIMIT 1 OFFSET 0), 3, 'Portafolio Carlos', 1850.00),
+(UUID(), (SELECT id FROM User LIMIT 1 OFFSET 1), 4, 'Portafolio María', 450.00),
+(UUID(), (SELECT id FROM User LIMIT 1 OFFSET 2), 5, 'Portafolio Juan', 2580.00),
+(UUID(), (SELECT id FROM User LIMIT 1 OFFSET 3), 6, 'Portafolio Lucía', 1550.00),
+(UUID(), (SELECT id FROM User LIMIT 1 OFFSET 4), 7, 'Portafolio Andrés', 200.00);
 
 -- Transacciones aleatorias para los usuarios
 INSERT INTO Transaction (id, amount, type, date, userId) VALUES
 (UUID(), 1000, 'deposit', '2024-01-15 15:00:00', (SELECT id FROM User LIMIT 1 OFFSET 0)),
-(UUID(), 200, 'withdrawal', '2024-02-10 16:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
+(UUID(), 200, 'deposit', '2024-02-10 16:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
 (UUID(), 500, 'deposit', '2024-03-05 17:30:00', (SELECT id FROM User LIMIT 1 OFFSET 2)),
 (UUID(), 1200, 'deposit', '2024-03-12 18:00:00', (SELECT id FROM User LIMIT 1 OFFSET 3)),
 (UUID(), 300, 'withdrawal', '2024-03-20 19:00:00', (SELECT id FROM User LIMIT 1 OFFSET 4)),
 (UUID(), 150, 'deposit', '2024-04-01 10:30:00', (SELECT id FROM User LIMIT 1 OFFSET 0)),
-(UUID(), 450, 'withdrawal', '2024-04-12 11:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
+(UUID(), 450, 'deposit', '2024-04-12 11:30:00', (SELECT id FROM User LIMIT 1 OFFSET 1)),
 (UUID(), 980, 'deposit', '2024-04-22 12:30:00', (SELECT id FROM User LIMIT 1 OFFSET 2)),
 (UUID(), 600, 'deposit', '2024-05-01 13:30:00', (SELECT id FROM User LIMIT 1 OFFSET 3)),
 (UUID(), 300, 'withdrawal', '2024-05-10 14:00:00', (SELECT id FROM User LIMIT 1 OFFSET 4)),

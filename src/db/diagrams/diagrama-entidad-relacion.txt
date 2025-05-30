@@ -47,6 +47,7 @@ Table Portfolio {
   userId uuid [not null, unique]
   riskLevel float [not null]
   name varchar(50) [not null]
+  balance float [not null, default: 0]
 }
 
 Table PortfolioStock {

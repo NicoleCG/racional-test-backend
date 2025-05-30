@@ -20,6 +20,9 @@ export class Portfolio {
   @Column()
   name: string;
 
+  @Column()
+  balance: number;
+
   @OneToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;
