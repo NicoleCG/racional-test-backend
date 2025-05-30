@@ -11,12 +11,16 @@ import { HashPipe } from './pipes/hash.pipe';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UsePipes(NotExistUserPipe, HashPipe)
-  @ApiBody({ type: LoginDto })
-  @ApiOperation({ summary: 'Realizar login de usuario' })
-  @ApiResponse({ status: 201, description: 'Login realizado correctamente' })
-  @ApiResponse({ status: 401, description: 'Error al iniciar sesión' })
   @Post('login')
+  @UsePipes(NotExistUserPipe, HashPipe)
+  @ApiOperation({ summary: 'Realizar login de usuario' })
+  @ApiBody({ type: LoginDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Login realizado correctamente',
+    type: JwtDto,
+  })
+  @ApiResponse({ status: 401, description: 'Error al iniciar sesión' })
   async login(@Body() loginDto: LoginDto): Promise<JwtDto> {
     const user: GetUserDto = await this.authService.validateUser(loginDto);
     return this.authService.login(user);

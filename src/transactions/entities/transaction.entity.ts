@@ -22,6 +22,9 @@ export class Transaction {
   })
   type: TypeTransaction;
 
+  @Column()
+  date: Date;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;
