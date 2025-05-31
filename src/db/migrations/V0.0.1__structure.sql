@@ -58,6 +58,7 @@ CREATE TABLE PortfolioStock (
     stockId CHAR(36) NOT NULL,
     portfolioId CHAR(36) NOT NULL,
     avgPurchasePrice FLOAT,
+    UNIQUE (portfolioId, stockId),
     FOREIGN KEY (stockId) REFERENCES Stock(id),
     FOREIGN KEY (portfolioId) REFERENCES Portfolio(id)
 );

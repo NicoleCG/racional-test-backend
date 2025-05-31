@@ -59,11 +59,14 @@ LIMIT 15;
 -- PortfolioStock
 INSERT INTO PortfolioStock (id, amount, stockId, portfolioId, avgPurchasePrice)
 SELECT UUID(),
-       ROUND(1 + RAND() * 50, 2),
-       s.id,
-       p.id,
-       ROUND(50 + RAND() * 500, 2)
-FROM Stock s
-JOIN Portfolio p
-ORDER BY RAND()
-LIMIT 15;
+       ROUND(1 + RAND() * 50, 2) AS amount,
+       sub.stockId,
+       sub.portfolioId,
+       ROUND(50 + RAND() * 500, 2) AS avgPurchasePrice
+FROM (
+    SELECT DISTINCT s.id AS stockId, p.id AS portfolioId
+    FROM Stock s
+    JOIN Portfolio p ON TRUE
+    ORDER BY RAND()
+    LIMIT 15
+) AS sub;

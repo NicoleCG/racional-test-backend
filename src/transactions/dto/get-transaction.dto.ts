@@ -10,7 +10,7 @@ export class GetTransactionDto extends PartialType(CreateTransactionDto) {
 
   @ApiProperty({ description: 'Cantidad de la transferencia' })
   @IsNumber()
-  @Min(0.01) // To limit the minimum of the transaction
+  @Min(1) // To limit the minimum of the transaction to $1
   amount: number;
 
   @ApiProperty({

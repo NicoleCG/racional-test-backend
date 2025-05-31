@@ -3,25 +3,18 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { Transaction } from './entities/transaction.entity';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { TransactionMapper } from './mappers/transaction.mapper';
-import { GetTransactionDto } from './dto/get-transaction.dto';
-import { User } from 'src/users/entities/user.entity';
-import { TypeTransaction } from './enum/typeTransaction.enum';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { Portfolio } from 'src/portfolios/entities/portfolio.entity';
+import { DataSource } from 'typeorm';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { GetTransactionDto } from './dto/get-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
+import { TypeTransaction } from './enum/typeTransaction.enum';
+import { TransactionMapper } from './mappers/transaction.mapper';
 
 @Injectable()
 export class TransactionsService {
   constructor(
-    @InjectRepository(Transaction)
-    private readonly transactionRepository: Repository<Transaction>,
-
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-
     @InjectDataSource()
     private readonly dataSource: DataSource,
   ) {}

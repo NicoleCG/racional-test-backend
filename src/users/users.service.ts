@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { User } from './entities/user.entity';
@@ -16,8 +20,33 @@ export class UsersService {
 
     private hashingService: HashingService,
   ) {}
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+
+  async update(req, updateUserDto: UpdateUserDto): Promise<GetUserDto> {
+    const userId = req.user.userId;
+
+    // Check new username doesn't exist already
+    if (updateUserDto.username) {
+      const existUser = await this.userRepository.existsBy({
+        username: updateUserDto.username,
+      });
+
+      if (existUser) {
+        throw new BadRequestException(
+          `El username: ${updateUserDto.username} ya existe`,
+        );
+      }
+    }
+    // Modify user information
+    const user = await this.userRepository.preload({
+      id: userId,
+      ...updateUserDto,
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Usuario con ID: ${userId} no encontrado`);
+    }
+    const userModified = await this.userRepository.save(user);
+    return UserMapper.entityToDto(userModified);
   }
 
   async validateCredentials(loginDto: LoginDto): Promise<GetUserDto | null> {
